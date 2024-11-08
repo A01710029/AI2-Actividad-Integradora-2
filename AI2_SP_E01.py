@@ -10,6 +10,8 @@ Fecha de Creación:
 07/11/2024
 """
 
+import copy
+
 """
 Lee y regresa los contenidos de un archivo txt.
 
@@ -67,11 +69,81 @@ def procesar_entrada(archivo):
     nueva_central = tuple(map(int, contenido[2 * N + 1 + N].strip("()").split(",")))
 
     return N, distancias, capacidades, ubicaciones_centrales, nueva_central
-    
-N, distancias, capacidades, ubicaciones_centrales, nueva_central = procesar_entrada("AI2_E01_Entrada_Y.txt")
 
-print(f"N: {N}")
-print(f"Distancias: {distancias}")
-print(f"Capacidades: {capacidades}")
-print(f"Ubicaciones Centrales: {ubicaciones_centrales}")
-print(f"Nueva Central: {nueva_central}")
+"""
+Algoritmo base de Floyd para encontrar las distancias más cortas entre
+todos los pares de nodos en un grafo ponderado.
+
+Parámetros:
+grafo (list): una matriz de adyacencia que representa el grafo.
+
+Valor de Retorno:
+dist (list): una matriz de adyacencia con las distancias más cortas entre todos los pares de nodos.
+
+Complejidad O(v^3): donde v es el número de nodos en el grafo.
+"""
+
+def floyd(grafo):
+    n = len(grafo)
+    dist = copy.deepcopy(grafo) # Copiar el grafo para crear la matriz de distancias
+
+    # El que se cuenta como nodo intermedio
+    for k in range(n):
+        # Nodo de inicio
+        for i in range(n):
+            # Nodo final
+            for j in range(n):
+                # Si hay una forma de llegar de i a j pasando por k
+                if dist[i][k] != 0 and dist[k][j] != 0:
+                    # Calcula la distancia pasando por ese nodo intermedio
+                    nueva_distancia = dist[i][k] + dist[k][j]
+                    # Si no hay una distancia previa o la nueva distancia es menor se actualiza la nueva distancia
+                    if dist[i][j] == 0 or nueva_distancia < dist[i][j]:
+                        dist[i][j] = nueva_distancia
+    return dist
+
+"""
+En base a lo que regresa el algoritmo de Floyd,
+se guarda en una cadena de texto las distancias más cortas entre todas las colonias.
+
+Parámetros:
+distancias (list): una matriz de adyacencia que representa el grafo.
+
+Valor de Retorno:
+salida (string): una cadena de texto con las distancias más cortas entre todas las colonias.
+
+Complejidad O(n^2): donde n es el número de nodos en el grafo.
+"""
+def floyd_parte_1(N, distancias):
+    distancias_floyd = floyd(distancias)
+    salida = "Punto 01: \n \n"
+    for i in range(N):
+        for j in range(N):
+            if i != j:
+                salida += (f"Colonia {i + 1} a Colonia {j + 1}: {distancias_floyd[i][j]}\n")
+        salida += "\n"
+    return salida
+
+"""
+Procesa la entrada y guarda la salida en un archivo de texto.
+
+Parámetros:
+entrada (string): el archivo de entrada.
+salida (string): el archivo de salida.
+
+Valor de Retorno:
+Ninguno
+"""
+def procesar_salida(entrada, salida):
+    # Procesas la entrada y lo guardas en variables
+    N, distancias, capacidades, ubicaciones_centrales, nueva_central = procesar_entrada(entrada)
+
+    # Parte 1
+    floyd_salida_1 = floyd_parte_1(N, distancias)
+
+    # Guardar las salidas en un archivo de texto
+    with open(salida, 'w') as f:
+        f.write(floyd_salida_1)
+
+# Prueba 01
+procesar_salida("AI2_E01_Entrada_1.txt", "AI2_E01_Salida_1.txt")
