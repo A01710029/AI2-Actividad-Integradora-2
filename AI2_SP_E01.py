@@ -120,7 +120,7 @@ def floyd_parte_1(N, distancias):
     for i in range(N):
         for j in range(N):
             if i != j:
-                salida += (f"Colonia {i + 1} a Colonia {j + 1}: {distancias_floyd[i][j]}\n")
+                salida += (f"Km de Colonia {i + 1} a Colonia {j + 1}: {distancias_floyd[i][j]}\n")
         salida += "\n"
     return salida
 
@@ -147,3 +147,4 @@ def procesar_salida(entrada, salida):
 
 # Prueba 01
 procesar_salida("AI2_E01_Entrada_1.txt", "AI2_E01_Salida_1.txt")
+procesar_salida("AI2_E01_Entrada_2.txt", "AI2_E01_Salida_2.txt")
