@@ -146,5 +146,5 @@ def procesar_salida(entrada, salida):
         f.write(floyd_salida_1)
 
 # Prueba 01
-procesar_salida("AI2_E01_Entrada_1.txt", "AI2_E01_Salida_1.txt")
-procesar_salida("AI2_E01_Entrada_2.txt", "AI2_E01_Salida_2.txt")
+procesar_salida("Entradas y Salidas/AI2_E01_Entrada_1.txt", "Entradas y Salidas/AI2_E01_Salida_1.txt")
+procesar_salida("Entradas y Salidas/AI2_E01_Entrada_2.txt", "Entradas y Salidas/AI2_E01_Salida_2.txt")
