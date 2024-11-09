@@ -36,3 +36,7 @@ Km de Colonia 6 a Colonia 3: 1
 Km de Colonia 6 a Colonia 4: 3
 Km de Colonia 6 a Colonia 5: 1
 
+Punto 02: 
+ 
+El recorrido: 1 -> 2 -> 5 -> 4 -> 6 -> 3 -> 1
+El costo: 12

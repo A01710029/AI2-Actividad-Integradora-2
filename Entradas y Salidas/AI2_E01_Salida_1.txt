@@ -16,3 +16,7 @@ Km de Colonia 4 a Colonia 1: 32
 Km de Colonia 4 a Colonia 2: 21
 Km de Colonia 4 a Colonia 3: 7
 
+Punto 02: 
+ 
+El recorrido: 1 -> 2 -> 3 -> 4 -> 1
+El costo: 73
