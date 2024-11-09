@@ -40,3 +40,7 @@ Punto 02:
  
 El recorrido: 1 -> 2 -> 5 -> 4 -> 6 -> 3 -> 1
 El costo: 12
+
+Punto 03: 
+ 
+Flujo maximo: 19

@@ -11,6 +11,7 @@ Fecha de Creación:
 """
 
 import copy
+from collections import deque
 
 """
 Lee y regresa los contenidos de un archivo txt.
@@ -92,10 +93,16 @@ def procesar_salida(entrada, salida):
     recorrido, costo_total = recorrido_preorden(N, arbol_prim, distancias)
     prim_salida_2 = prim_parte_2(recorrido, costo_total)
 
+    # Parte 3
+    origen = 0
+    destino = N - 1
+    flujo_max = edmonds_karp(capacidades, origen, destino)
+
     # Guardar las salidas en un archivo de texto
     with open(salida, 'w') as f:
         f.write(floyd_salida_1)
         f.write(prim_salida_2)
+        f.write(flujo_max)
 
 """
 Algoritmo base de Floyd para encontrar las distancias más cortas entre
@@ -226,6 +233,52 @@ def prim_parte_2(recorrido, costo_total):
 
     return result
 
+def bfs(camino, grafo, origen, destino):
+    n = len(grafo)
+    visitado = [False] * n
+    visitado[origen] = True
+    cola = deque([origen])
+
+    while cola:
+        nodo = cola.popleft()
+        
+        for vecino, capacidad in enumerate(grafo[nodo]):
+            if not visitado[vecino] and capacidad > 0:
+                cola.append(vecino)
+                visitado[vecino] = True
+                camino[vecino] = nodo
+                if vecino == destino:
+                    return True
+    return False
+
+def edmonds_karp(grafo, origen, destino):
+    n = len(grafo)
+    flujo_maximo = 0
+    grafo_residual = [fila[:] for fila in grafo]
+
+    camino = [-1] * n
+
+    while bfs(camino, grafo_residual, origen, destino):
+        flujo_camino = float('Inf')
+        nodo = destino
+        
+        while nodo != origen:
+            flujo_camino = min(flujo_camino, grafo_residual[camino[nodo]][nodo])
+            nodo = camino[nodo]
+        
+        nodo = destino
+        while nodo != origen:
+            anterior = camino[nodo]
+            grafo_residual[anterior][nodo] -= flujo_camino
+            grafo_residual[nodo][anterior] += flujo_camino
+            nodo = camino[nodo]
+
+        flujo_maximo += flujo_camino
+
+    result = f"\nPunto 03: \n \n"
+    result += f"Flujo maximo: {flujo_maximo}\n"
+
+    return result
 
 # Prueba 01
 procesar_salida("Entradas y Salidas/AI2_E01_Entrada_1.txt", "Entradas y Salidas/AI2_E01_Salida_1.txt")
