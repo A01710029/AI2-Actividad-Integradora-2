@@ -314,6 +314,7 @@ def edmonds_karp(grafo, origen, destino):
 
     return result
 
-# Prueba 01
+# Casos de Pruebas
 procesar_salida("Entradas y Salidas/AI2_E01_Entrada_1.txt", "Entradas y Salidas/AI2_E01_Salida_1.txt")
 procesar_salida("Entradas y Salidas/AI2_E01_Entrada_2.txt", "Entradas y Salidas/AI2_E01_Salida_2.txt")
+procesar_salida("Entradas y Salidas/AI2_E01_Entrada_3.txt", "Entradas y Salidas/AI2_E01_Salida_3.txt")
