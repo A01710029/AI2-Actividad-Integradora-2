@@ -233,47 +233,81 @@ def prim_parte_2(recorrido, costo_total):
 
     return result
 
+"""
+Implementa el algoritmo de Búsqueda en Anchura (BFS) para encontrar un camino en un grafo.
+
+Parámetros:
+camino (list): lista de nodos de los nodos visitados.
+grafo (list): matriz de adyacencia que representa el grafo.
+origen (int): nodo donde empieza la búsqueda.
+destino (int): nodo al que se quiere llegar.
+
+Valor de Retorno:
+bool: true/false dependiendo de si existe un camino desde el origen hasta el destino con capacidad disponible.
+
+Complejidad O(n + m): donde n es el número de nodos y m el número de aristas en el grafo.
+"""
 def bfs(camino, grafo, origen, destino):
     n = len(grafo)
     visitado = [False] * n
     visitado[origen] = True
-    cola = deque([origen])
+    cola = deque([origen]) # Para manejar los nodos que se deben visitar
 
+    # Mientras haya nodos que deben visitarse
     while cola:
         nodo = cola.popleft()
         
+        # Recorrer vecinos del nodo
         for vecino, capacidad in enumerate(grafo[nodo]):
+            # Si no se ha visitado y tiene capacidad
             if not visitado[vecino] and capacidad > 0:
                 cola.append(vecino)
                 visitado[vecino] = True
-                camino[vecino] = nodo
+                camino[vecino] = nodo # Construir camino
+                # Si se llega al destino, existe un camino 
                 if vecino == destino:
                     return True
     return False
 
+"""
+Implementa el algoritmo de Edmonds-Karp para encontrar el flujo máximo en un grafo.
+
+Parámetros:
+grafo (list): matriz de adyacencia que representa el grafo.
+origen (int): nodo donde se inicia a calcular el flujo máximo.
+destino (int): nodo al cual se quiere llegar.
+
+Valor de Retorno:
+str: cadena de texto con el flujo máximo calculado.
+
+Complejidad O(n * m^2): donde n es el número de nodos y m el número de aristas en el grafo.
+"""
 def edmonds_karp(grafo, origen, destino):
     n = len(grafo)
     flujo_maximo = 0
-    grafo_residual = [fila[:] for fila in grafo]
+    grafo_residual = [fila[:] for fila in grafo] # Crear copia del grafo
 
     camino = [-1] * n
 
+    # Hasta que se encuentre un camino
     while bfs(camino, grafo_residual, origen, destino):
-        flujo_camino = float('Inf')
+        flujo_camino = float('Inf') # Para guardar flujo mínimo del camino definido
         nodo = destino
         
+        # Calcular flujo mínimo del camino definido
         while nodo != origen:
             flujo_camino = min(flujo_camino, grafo_residual[camino[nodo]][nodo])
             nodo = camino[nodo]
         
+        # Actualizar capacidades mientras se recorre el camino
         nodo = destino
         while nodo != origen:
             anterior = camino[nodo]
-            grafo_residual[anterior][nodo] -= flujo_camino
-            grafo_residual[nodo][anterior] += flujo_camino
+            grafo_residual[anterior][nodo] -= flujo_camino # Restar flujo al camino hacia adelante
+            grafo_residual[nodo][anterior] += flujo_camino # Sumar flujo al camino hacia atrás
             nodo = camino[nodo]
 
-        flujo_maximo += flujo_camino
+        flujo_maximo += flujo_camino # Sumar flujo del camino para obtener total
 
     result = f"\nPunto 03: \n \n"
     result += f"Flujo maximo: {flujo_maximo}\n"
