@@ -24,3 +24,8 @@ El costo: 73
 Punto 03: 
  
 Flujo maximo: 78
+
+Punto 04: 
+ 
+La central mas cercana esta en (300, 100) 
+Se encuentra a una distancia de 103.07764064044152

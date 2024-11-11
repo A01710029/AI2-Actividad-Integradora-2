@@ -12,6 +12,7 @@ Fecha de Creación:
 
 import copy
 from collections import deque
+from scipy.spatial import KDTree
 
 """
 Lee y regresa los contenidos de un archivo txt.
@@ -98,11 +99,15 @@ def procesar_salida(entrada, salida):
     destino = N - 1
     flujo_max = edmonds_karp(capacidades, origen, destino)
 
+    # Parte 4
+    central = central_cercana(ubicaciones_centrales, nueva_central)
+
     # Guardar las salidas en un archivo de texto
     with open(salida, 'w') as f:
         f.write(floyd_salida_1)
         f.write(prim_salida_2)
         f.write(flujo_max)
+        f.write(central)
 
 """
 Algoritmo base de Floyd para encontrar las distancias más cortas entre
@@ -308,10 +313,33 @@ def edmonds_karp(grafo, origen, destino):
             nodo = camino[nodo]
 
         flujo_maximo += flujo_camino # Sumar flujo del camino para obtener total
-
+   
     result = f"\nPunto 03: \n \n"
     result += f"Flujo maximo: {flujo_maximo}\n"
 
+    return result
+
+"""
+Calcula ubicación de la nueva central y la distancia mínima.
+
+Parámetros:
+ubicaciones_centrales (list): lista de tuplas de las centrales existentes (X, Y).
+nueva_central (tuple): coordenadas de la nueva central.
+
+Valor de Retorno:
+str: cadena de texto con la ubucación de la central y la distancia mínima.
+
+Complejidad: O(log n) para la búsqueda del vecino más cercano.
+"""
+def central_cercana(ubicaciones_centrales, nueva_central):
+    # Construir el k-d tree con las ubicaciones de las centrales existentes
+    tree = KDTree(ubicaciones_centrales)
+    
+    # Realizar la consulta para encontrar la central más cercana
+    distancia_minima, indice = tree.query(nueva_central)
+    central_cercana = ubicaciones_centrales[indice]
+    result = f"\nPunto 04: \n \n"
+    result +=  f"La central mas cercana esta en {central_cercana} \nSe encuentra a una distancia de {distancia_minima}\n"
     return result
 
 # Casos de Pruebas
