@@ -209,6 +209,8 @@ visitado (list): lista de nodos visitados.
 
 Valor de Retorno:
 min_indice (int): índice del vértice con la clave más baja.
+
+Complejidad O(n): donde n es el número de nodos en el grafo.
 """
 def min_clave(N, clave, visitado):
     # Encontramos el vértice con la clave más baja que no ha sido visitado
@@ -230,6 +232,8 @@ distancias (list): matriz de distancias entre los nodos.
 
 Valor de Retorno:
 recorrido, costo_total (tuple): tupla con el recorrido en preorden y el costo total del recorrido.
+
+Complejidad O(n + m): donde n es el número de nodos en el grafo y m es el número de aristas.
 """
 def recorrido_preorden(N, arbol, distancias):
     # Construimos un grafo basado en el árbol de expansión mínima
