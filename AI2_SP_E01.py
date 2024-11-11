@@ -116,7 +116,6 @@ dist (list): una matriz de adyacencia con las distancias más cortas entre todos
 
 Complejidad O(v^3): donde v es el número de nodos en el grafo.
 """
-
 def floyd(grafo):
     n = len(grafo)
     dist = copy.deepcopy(grafo) # Copiar el grafo para crear la matriz de distancias
@@ -158,6 +157,18 @@ def floyd_parte_1(N, distancias):
         salida += "\n"
     return salida
 
+"""
+Implementa el algoritmo de Prim para encontrar el MST de un grafo ponderado.
+
+Parámetros:
+N (int): número de nodos en el grafo.
+distancias (list): matriz de adyacencia que representa las distancias entre los nodos.
+
+Valor de Retorno:
+arbol (list): lista de aristas que forman el árbol de expansión mínima, representadas como tuplas (u, v).
+
+Complejidad O(n^2): donde n es el número de nodos en el grafo.
+"""
 def prim(N, distancias):
     # Variables iniciales
     clave = [float('inf')] * N  # Para almacenar las claves de los vértices
@@ -183,6 +194,17 @@ def prim(N, distancias):
 
     return arbol
 
+"""
+Encuentra el vértice con la clave más baja que no ha sido visitado en el algoritmo de Prim.
+
+Parámetros:
+N (int): número de nodos en el grafo.
+clave (list): lista de claves de los nodos.
+visitado (list): lista de nodos visitados.
+
+Valor de Retorno:
+min_indice (int): índice del vértice con la clave más baja.
+"""
 def min_clave(N, clave, visitado):
     # Encontramos el vértice con la clave más baja que no ha sido visitado
     min_valor = float('inf')
@@ -193,6 +215,17 @@ def min_clave(N, clave, visitado):
             min_indice = i
     return min_indice
 
+"""
+Realiza un recorrido en preorden a partir del MST, sumando el costo total del recorrido.
+
+Parámetros:
+N (int): número de nodos en el grafo.
+arbol (list): lista de aristas que forman el MST.
+distancias (list): matriz de distancias entre los nodos.
+
+Valor de Retorno:
+recorrido, costo_total (tuple): tupla con el recorrido en preorden y el costo total del recorrido.
+"""
 def recorrido_preorden(N, arbol, distancias):
     # Construimos un grafo basado en el árbol de expansión mínima
     grafo_arbol = {i: [] for i in range(N)}
@@ -225,6 +258,19 @@ def recorrido_preorden(N, arbol, distancias):
     
     return recorrido, costo_total
 
+"""
+En base a lo que regresa el algoritmo de Prim,
+se guarda en una cadena de texto del recorrido en preorden y el costo total.
+
+Parámetros:
+recorrido (list): lista de nodos visitados en el recorrido en preorden.
+costo_total (int): costo total del recorrido.
+
+Valor de Retorno:
+result (string): una cadena de texto con las distancias más cortas entre todas las colonias.
+
+Complejidad O(n): donde n es el número de nodos en el recorrido.
+"""
 def prim_parte_2(recorrido, costo_total):
     recorrido_formateado = " -> ".join(str(nodo + 1) for nodo in recorrido)  
     result = f"Punto 02: \n \n"
@@ -278,7 +324,7 @@ origen (int): nodo donde se inicia a calcular el flujo máximo.
 destino (int): nodo al cual se quiere llegar.
 
 Valor de Retorno:
-str: cadena de texto con el flujo máximo calculado.
+result (str): cadena de texto con el flujo máximo calculado.
 
 Complejidad O(n * m^2): donde n es el número de nodos y m el número de aristas en el grafo.
 """
