@@ -251,7 +251,6 @@ def recorrido_preorden(N, arbol, distancias):
                 # Sumar el costo de la arista al costo total
                 nonlocal costo_total
                 costo_total += distancias[v][vecino]
-                print(costo_total)
                 dfs(vecino)
 
     # Comenzamos el recorrido desde el vértice 0
